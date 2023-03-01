@@ -33,7 +33,12 @@ app.get('/', (req, res) => {
 const bookRouter = express.Router();
 app.use('/mybooklist', bookRouter);
 
-//GET request to get all the books from the db
+//GET request to get books with a given status from the db
+bookRouter.get('/:status', bookController.getBooks, (req, res) => {
+  return res.json(res.locals.books);
+})
+
+//GET request to get all books from the db
 bookRouter.get('/', bookController.getBooks, (req, res) => {
   return res.json(res.locals.books);
 })

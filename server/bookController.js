@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const Book = require('./bookModel');
 
 const bookController = {
-  //get all the books in the db
+  //get books by status in the db
   getBooks: (req, res, next) => {
-    Book.find({})
+    const { status } = req.params;
+    Book.find({ status })
       .then((bookArr) => {
         // console.log('bookController.getBooks: ', bookArr);
         if (bookArr.length === 0) {
