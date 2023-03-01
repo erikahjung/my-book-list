@@ -1,0 +1,7 @@
+#App {
+  display: flex;
+  flex-flow: column wrap;
+  height: 75%;
+  width: 75%;
+  background-color: palegoldenrod;
+}
