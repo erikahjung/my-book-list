@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class Book extends Component {
-  render () {
-    return (
-      <div className='book'>
-        <div className='book-subcontainer'>
-          <input type='checkbox' id={this.props.id}></input>
-          <p>{this.props.title}</p>
-        </div>
-        <p>{this.props.author}</p>
-        <p>{this.props.status}</p>
+function Book (props) {
+  return (
+    <div className='book'>
+      <div className='book-subcontainer'>
+        <input type='checkbox' id={props.id}></input>
+        <p>{props.title}</p>
       </div>
-    )
-  }
+      <p>{props.author}</p>
+      <p>{props.status}</p>
+    </div>
+  )
 }
 
 export default Book;

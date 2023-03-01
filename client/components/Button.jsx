@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Button extends Component {
-  render () {
-    return (
-      <button>
-        {this.props.action}
-      </button>
-    )
-  }
+function Button (props) {
+  return (
+    <button>
+      {props.action}
+    </button>
+  )
 }
 
 export default Button;
