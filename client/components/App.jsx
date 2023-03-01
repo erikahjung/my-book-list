@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import List from './List.jsx';
 import Button from './Button.jsx';
 
 function App () {
-  const bookStatus = ['to-do', 'in-progress', 'done'];
+  const initialValue = {
+    'to-do': [], 
+    'in-progress': [], 
+    'done': []
+  };
+
+  const [booklist, setBooklist] = useState(initialValue);
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/mybooklist/to-do'),
+      fetch('/mybooklist/in-progress'),
+      fetch('/mybooklist/done'),
+    ])
+      .then(([todoRes, inprogRes, doneRes]) => 
+        Promise.all([todoRes.json(), inprogRes.json(), doneRes.json()])
+      )
+      .then(([todoData, inprogData, doneData]) => {
+        setBooklist({
+          'to-do': todoData,
+          'in-progress': inprogData,
+          'done': doneData
+        })
+      })
+  }, [])
 
   return (
     <div id='app'>
@@ -14,8 +38,9 @@ function App () {
             <Button action='Delete'/>
           </div>
         </div>
-        {bookStatus.map((status) => {
-          return <List key={status} id={status}/>
+        {Object.keys(booklist).map((status) => {
+          // console.log(booklist[status])
+          return <List key={status} id={status} books={booklist[status]}/>
         })}
       </div>
   )
