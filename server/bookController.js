@@ -45,10 +45,10 @@ const bookController = {
   //update a book in the db
   updateBook: (req, res, next) => {
     const { id } = req.params;
-    const { status } = req.body;
+    const { title, author, status } = req.body;
     console.log('bookController.updateBook req.params: ', req.params);
     console.log('bookController.updateBook req.body: ', req.body);
-    Book.findOneAndUpdate({ _id : new mongoose.Types.ObjectId(id) }, { status }, { new: true })
+    Book.findOneAndUpdate({ _id : new mongoose.Types.ObjectId(id) }, { title, author, status }, { new: true })
       .then((updatedBook) => {
         console.log('bookController.updateBook sucessful: ', updatedBook);
         res.locals.updatedBook = updatedBook;

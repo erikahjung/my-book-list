@@ -60,6 +60,7 @@ function App () {
           for (const bookId in checkboxes[status]) {
             if (checkboxes[status][bookId] === true) {
               if (updateBookId) {
+                setChange(change + 1);
                 return;
               }
               updateBookId = bookId;
