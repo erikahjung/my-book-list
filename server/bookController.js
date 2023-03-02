@@ -8,11 +8,11 @@ const bookController = {
     Book.find({ status })
       .then((bookArr) => {
         // console.log('bookController.getBooks: ', bookArr);
-        if (bookArr.length === 0) {
-          res.status(400);
-        } else {
-          res.status(200);
-        }
+        // if (bookArr.length === 0) {
+        //   res.status(400);
+        // } else {
+        //   res.status(200);
+        // }
         res.locals.books = bookArr;
         return next();
       })
