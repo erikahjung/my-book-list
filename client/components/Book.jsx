@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function Book (props) {
+  // console.log(props);
+
   return (
     <div className='book'>
       <div className='book-subcontainer'>
-        <input type='checkbox' id={props.id}></input>
+        <input type='checkbox' id={props.id} checked={props.chechbox} onChange={() => props.onCheck(props.id, props.status)}></input>
         <p>{props.title}</p>
       </div>
       <p>{props.author}</p>

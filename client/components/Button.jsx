@@ -2,8 +2,8 @@ import React from 'react';
 
 function Button (props) {
   return (
-    <button>
-      {props.action}
+    <button onClick={() => props.onClick()}>
+      {props.text}
     </button>
   )
 }
