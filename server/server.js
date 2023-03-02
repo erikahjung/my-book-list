@@ -52,8 +52,8 @@ bookRouter.post('/', bookController.addBook, (req, res) => {
 
 //PATCH request to update a book in the db
 bookRouter.patch('/:id', bookController.updateBook, (req, res) => {
-  return res.sendStatus(200);
-  // return res.status(200).json(res.locals.updatedBook);
+  // return res.sendStatus(200);
+  return res.status(200).json(res.locals.updatedBook);
 })
 
 //DELETE request to delete a book in the db
