@@ -101,6 +101,8 @@ function App () {
   }
 
   const handleAddOrUpdate = () => {
+    if (!form.title || !form.author || !form.status) {return toggleForm()}
+
     if (request === 'add') {
       const reqOptions = { 
         method: 'POST',
