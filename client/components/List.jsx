@@ -4,11 +4,11 @@ import Book from './Book.jsx';
 function List (props) {
   return (
     <div className='list'>
-      <h2>{props.id}</h2>
+      <h2 className={props.id}>{props.id}</h2>
       <div className='list-header'>
-        <h5>Title</h5>
-        <h5>Author</h5>
-        <h5>Status</h5>
+        <h3>Title</h3>
+        <h3>Author</h3>
+        <h3>Status</h3>
       </div>
       {props.books.map((book) => {
         // console.log(props.checkboxes);

@@ -217,6 +217,7 @@ function App () {
             <Button 
               text='Delete'
               onClick={handleDelete}
+              action='delete'
             />
           </div>
         </div>

@@ -7,7 +7,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
+  gap: 30px;
   height: 100%;
   width: 100%;
   padding-top: 25px;
@@ -19,15 +19,15 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 300px;
-  left: 400px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: 350px;
   width: 600px;
   gap: 10px;
   background-color: rgb(238, 207, 170);
-  /* border-color: black;
-  border-width: 3px; */
+  border: 1px solid gray;
 }
 
 #form .field {
@@ -48,8 +48,10 @@ body {
   justify-content: center;
   align-items: center;
   padding-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
   gap: 10px;
-  width: 90%;
+  width: 75%;
   background-color: white;
 }
 
@@ -58,11 +60,24 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
+  width: 100%;
 }
 
-h5 {
+h3 {
   margin: 0px;
+}
+
+.to-do {
+  color: #ff6961;
+}
+
+.in-progress {
+  color: #ffb54c;
+}
+
+.done {
+  /* color: 7abd7e; */
+  color: #8cd47e;
 }
 
 .book {
@@ -70,10 +85,10 @@ h5 {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
+  width: 100%;
   background-color: #eeddaa;
-  padding-left: 10px;
-  padding-right: 10px;
+  /* padding-left: 10px;
+  padding-right: 10px; */
 }
 
 .book-subcontainer {
@@ -90,7 +105,7 @@ h5 {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  width: 90%;
+  width: 75%;
 }
 
 .edit-buttons {
@@ -104,4 +119,22 @@ h5 {
 button {
   height: 50px;
   width: 100px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
+
+#add {
+  background-color: #d3d4d9;
+}
+
+#submit {
+  background-color: #d3d4d9;
+}
+
+#update {
+  background-color: #dedfe4;
+}
+
+/* #delete {
+  background-color: #f3f4f9;
+} */

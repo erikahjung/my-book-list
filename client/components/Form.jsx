@@ -12,15 +12,15 @@ function Form (props) {
     <div id='form' style={props.book.display}>
       <h1>New Book!</h1>
       <div className='field'>
-        <p><strong>Title: </strong></p>
+        <p>Title: </p>
         <input id='input-title' value={props.book.title} onInput={e => props.setBook(updateBookDetails('title', e.target.value))}></input>
       </div>
       <div className='field'>
-        <p><strong>Author: </strong></p>
+        <p>Author: </p>
         <input id='input-author' value={props.book.author} onInput={e => props.setBook(updateBookDetails('author', e.target.value))}></input>
       </div>
       <div className='field'>
-        <p><strong>Status: </strong></p>
+        <p>Status: </p>
         <select id='input-status' value={props.book.status} onChange={e => props.setBook(updateBookDetails('status', e.target.value))}>
           <option disabled hidden value=''></option>
           <option value="to-do">to-do</option>
@@ -29,7 +29,7 @@ function Form (props) {
         </select>
       </div>
       <div className='field'>
-        <Button text='Submit' onClick={props.onSubmit}/>
+        <Button action='submit' text='Submit' onClick={props.onSubmit}/>
         <Button text='Cancel' onClick={props.onCancel}/>
       </div>
     </div>
