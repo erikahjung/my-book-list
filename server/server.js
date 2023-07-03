@@ -2,12 +2,13 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const PORT = 3000;
+require('dotenv').config();
 
 const bookController = require('./bookController');
 
 //connect to the mongoDB
 const mongoose = require('mongoose');
-const MONGO_URI = 'mongodb+srv://erikahjung:mushroom@cluster0.eanhbnd.mongodb.net/?retryWrites=true&w=majority';
+const MONGO_URI = process.env.MONGO_URI;
 mongoose.connect(MONGO_URI, {
   // options for the connect method to parse the URI
   useNewUrlParser: true,
