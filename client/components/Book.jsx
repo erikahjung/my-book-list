@@ -6,7 +6,7 @@ function Book (props) {
   return (
     <div className='book'>
       <div className='book-subcontainer'>
-        <input type='checkbox' id={props.id} checked={props.checkbox} onChange={() => props.onCheck(props.id, props.status)}></input>
+        <input type='checkbox' id={props.id} checked={props.checkbox} onChange={() => props.onCheck(props.status, props.id)}></input>
         <p>{props.title}</p>
       </div>
       <p>{props.author}</p>

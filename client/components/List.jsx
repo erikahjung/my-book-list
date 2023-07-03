@@ -12,14 +12,13 @@ function List (props) {
       </div>
       {props.books.map((book) => {
         // console.log(props.checkboxes);
-        console
         return <Book 
           key={book._id} 
           id={book._id} 
           title={book.title} 
           author={book.author} 
           status={book.status}
-          checkbox={props.checkboxes[book._id]}
+          checkbox={props.checkbox.id === book._id}
           onCheck={props.onCheck}
           />
       })}

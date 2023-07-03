@@ -9,13 +9,12 @@ function App () {
     'in-progress': [], 
     'done': []
   };
-  const emptyCheckboxes = {
-    'to-do': {}, 
-    'in-progress': {}, 
-    'done': {}
+  const emptyCheckbox = {
+    'status': null,
+    'id': null
   };
   const emptyForm = {
-    display: {display: 'none'},
+    display: { display: 'none' },
     id: null,
     title: '',
     author: '',
@@ -23,87 +22,48 @@ function App () {
   }
 
   const [booklist, setBooklist] = useState(emptyBooklist);
-  const [checkboxes, setCheckboxes] = useState(emptyCheckboxes);
+  const [checkbox, setCheckbox] = useState(emptyCheckbox);
   const [change, setChange] = useState(0);
   const [form, setForm] = useState(emptyForm);
-  const [request, setRequest] = useState('');
 
-  const handleCheck = (id, stat) => {
-    const updatedCheckboxes = Object.assign({}, checkboxes[stat]);
-    for (const bookId in updatedCheckboxes) {
-      if (bookId === id) {
-        updatedCheckboxes[bookId] = !updatedCheckboxes[bookId];
-      }
+  const handleCheck = (status, id) => {
+    // console.log(status, id);
+
+    if (!checkbox.id) {
+      setCheckbox({ status, id });
+    } else if (checkbox.id === id) {
+      setCheckbox(emptyCheckbox);
     }
-    const newCheckboxes = {};
-    newCheckboxes[`${stat}`] = updatedCheckboxes;
-    setCheckboxes({...checkboxes, ...newCheckboxes});
   }
 
   const toggleForm = (action) => {
     if (form.display.display === 'none') {
-      if (action === 'add') {
-        const fields = {
-          display: {display: 'flex'},
-          id: null,
-          title: '',
-          author: '',
-          status: ''
-        }
-        setForm(fields);
-        setRequest('add');
+      if (action === 'Add') {
+        setForm({ 
+          ...emptyForm, 
+          display: { display: 'flex' }
+        });
       }
-      if (action === 'update') {
-        let updateBookId;
-        let updateBookStat;
-        for (const status in checkboxes) {
-          for (const bookId in checkboxes[status]) {
-            if (checkboxes[status][bookId] === true) {
-              if (updateBookId) {
-                setChange(change + 1);
-                return;
-              }
-              updateBookId = bookId;
-              updateBookStat = status;
-            }
-          }
-        }
-        if (updateBookId) {
-          let updateBook;
-          booklist[updateBookStat].forEach((book) => {
-            if (book._id === updateBookId) {
-              updateBook = book;
-            }
-          })
-          const fields = {
-            display: {display: 'flex'},
-            id: updateBookId,
-            title: updateBook.title,
-            author: updateBook.author,
-            status: updateBook.status
-          }
-          // console.log(fields);
-          setForm(fields);
-          setRequest('update');
-        }
+      if (action === 'Update' && checkbox.id) {
+        const updateBook = booklist[checkbox.status][checkbox.id]; //undefined - need to figure out why form is pre-populating with book data on Update button click
+        console.log(updateBook);
+
+        setForm({
+          ...updateBook,
+          display: { display: 'flex' }
+        })
       }
     } else {
-      setForm({
-        display: {display: 'none'},
-        id: null,
-        title: '',
-        author: '',
-        status: ''
-      })
-      setRequest('');
+      setForm(emptyForm);
     }
-    setChange(change + 1);
+    setCheckbox(emptyCheckbox);
+    setChange(change => change + 1);
   }
 
-  const handleAddOrUpdate = () => {
-    if (!form.title || !form.author || !form.status) {return toggleForm()}
+  const handleAddOrUpdate = (event) => {
+    if (!form.title || !form.author || !form.status) return toggleForm();
 
-    if (request === 'add') {
+    if (event === 'Add') {
       const reqOptions = { 
         method: 'POST',
         headers: {'Content-Type':'application/json'},
@@ -123,7 +83,7 @@ function App () {
         .catch((error) => console.log('Error with POST request: ', error));
     }
     //server will only udpate the status if changed
-    if (request === 'update') {
+    if (event === "Update") {
       const reqOptions = { 
         method: 'PATCH',
         headers: {'Content-Type':'application/json'},
@@ -145,24 +105,15 @@ function App () {
   }
 
   const handleDelete = () => {
-    const deleteBooks = [];
-    for (const status in checkboxes) {
-      for (const bookId in checkboxes[status]) {
-        if (checkboxes[status][bookId] === true) {
-          deleteBooks.push(bookId);
-        }
-      }
-    }
-    if (deleteBooks.length > 0) {
-      deleteBooks.forEach((bookId) => {
-        fetch(`/mybooklist/${bookId}`, { method: 'DELETE' })
+    if (checkbox.id) {
+      fetch(`/mybooklist/${checkbox.id}`, { method: 'DELETE' })
           .then((res) => res.json())
           .then((deletedBook) => {
             console.log(deletedBook)
-            setChange(change + 1);
+            setChange(change => change + 1);
+            setCheckbox(emptyCheckbox);
           })
           .catch((error) => console.log('Error with DELETE request: ', error));
-      })
     }
   }
 
@@ -182,19 +133,9 @@ function App () {
           'done': doneData
         };
         setBooklist(initialBooklist);
-
-        const initialCheckboxes = {};
-        for (const key in initialBooklist) {
-          initialCheckboxes[key] = {};
-          initialBooklist[key].forEach((book) => {
-            initialCheckboxes[key][book._id] = false;
-          })
-        }
-        setCheckboxes(initialCheckboxes);
       })
+      .catch((error) => console.log(error));
   }, [change])
-
-  // console.log(request);
 
   return (
     <div id='app'>
@@ -203,23 +144,24 @@ function App () {
         setBook={setForm}
         onCancel={toggleForm}
         onSubmit={handleAddOrUpdate}
+        text={form.id ? 'Update' : 'Add'}
         />
         <div className='button-container'>
           <Button 
             text='Add Book!'
             onClick={toggleForm}
-            action='add'
+            action='Add'
             />
           <div className='edit-buttons'>
             <Button 
               text='Update'
               onClick={toggleForm}
-              action='update'
+              action='Update'
               />
             <Button 
               text='Delete'
               onClick={handleDelete}
-              action='delete'
+              action='Delete'
             />
           </div>
         </div>
@@ -228,7 +170,7 @@ function App () {
             key={status} 
             id={status} 
             books={booklist[status]} 
-            checkboxes={checkboxes[status]} 
+            checkbox={checkbox} 
             onCheck={handleCheck}
             />
         })}
