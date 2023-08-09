@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Header from './Header.jsx';
 import List from './List.jsx';
 import Button from './Button.jsx';
 import Form from './Form.jsx';
+import { ThemeContext } from './ThemeContext.jsx';
 
 function App () {
   const emptyBooklist = {
@@ -25,6 +27,7 @@ function App () {
   const [checkbox, setCheckbox] = useState(emptyCheckbox);
   const [change, setChange] = useState(0);
   const [form, setForm] = useState(emptyForm);
+  const [theme, setTheme] = useState('light');
 
   const handleCheck = (status, id) => {
     // console.log(status, id);
@@ -138,43 +141,44 @@ function App () {
   }, [change])
 
   return (
-    <div id='app'>
-       <Form 
-        book={form}
-        setBook={setForm}
-        onCancel={toggleForm}
-        onSubmit={handleAddOrUpdate}
-        text={form.id ? 'Update' : 'Add'}
-        />
-        <div className='button-container'>
-          <Button 
-            text='Add Book!'
-            onClick={toggleForm}
-            action='Add'
-            />
-          <div className='edit-buttons'>
+      <ThemeContext.Provider value={theme}>
+        <Header theme={theme} setTheme={setTheme}/>
+        <Form 
+          book={form}
+          setBook={setForm}
+          onCancel={toggleForm}
+          onSubmit={handleAddOrUpdate}
+          text={form.id ? 'Update' : 'Add'}
+          />
+          <div className='button-container'>
             <Button 
-              text='Update'
+              text='Add Book!'
               onClick={toggleForm}
-              action='Update'
+              action='Add'
               />
-            <Button 
-              text='Delete'
-              onClick={handleDelete}
-              action='Delete'
-            />
+            <div className='edit-buttons'>
+              <Button 
+                text='Update'
+                onClick={toggleForm}
+                action='Update'
+                />
+              <Button 
+                text='Delete'
+                onClick={handleDelete}
+                action='Delete'
+              />
+            </div>
           </div>
-        </div>
-        {Object.keys(booklist).map((status) => {
-          return <List 
-            key={status} 
-            id={status} 
-            books={booklist[status]} 
-            checkbox={checkbox} 
-            onCheck={handleCheck}
-            />
-        })}
-      </div>
+          {Object.keys(booklist).map((status) => {
+            return <List 
+              key={status} 
+              id={status} 
+              books={booklist[status]} 
+              checkbox={checkbox} 
+              onCheck={handleCheck}
+              />
+          })}
+      </ThemeContext.Provider>
   )
 }
 

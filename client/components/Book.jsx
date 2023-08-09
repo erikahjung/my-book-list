@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from './ThemeContext.jsx';
 
 function Book (props) {
-  // console.log(props);
+  const theme = useContext(ThemeContext);
 
   return (
-    <div className='book'>
+    <div className={'book' + ' ' + theme}>
       <div className='book-subcontainer'>
         <input type='checkbox' id={props.id} checked={props.checkbox} onChange={() => props.onCheck(props.status, props.id)}></input>
         <p>{props.title}</p>

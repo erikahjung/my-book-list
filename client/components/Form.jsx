@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Button from './Button.jsx';
+import { ThemeContext } from './ThemeContext.jsx';
 
 function Form (props) {
+  const theme = useContext(ThemeContext);
+
   return (
-    <div id='form' style={props.book.display}>
+    <div id='form' className={theme} style={props.book.display}>
       <h1>New Book!</h1>
       <div className='field'>
         <p>Title: </p>
