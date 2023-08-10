@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ThemeContext } from "./ThemeContext.jsx";
 
-function Header({ theme, setTheme }) {
+function Header() {
+  const { theme, setTheme } = useContext(ThemeContext);
+
   return (
     <div id='header'>
       <h1>My Book List</h1>

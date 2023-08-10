@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from './ThemeContext.jsx';
 
 function Book (props) {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div className={'book' + ' ' + theme}>

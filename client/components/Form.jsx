@@ -3,7 +3,7 @@ import Button from './Button.jsx';
 import { ThemeContext } from './ThemeContext.jsx';
 
 function Form (props) {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div id='form' className={theme} style={props.book.display}>

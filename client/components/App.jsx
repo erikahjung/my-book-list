@@ -141,8 +141,8 @@ function App () {
   }, [change])
 
   return (
-      <ThemeContext.Provider value={theme}>
-        <Header theme={theme} setTheme={setTheme}/>
+      <ThemeContext.Provider value={{ theme, setTheme }}>
+        <Header/>
         <Form 
           book={form}
           setBook={setForm}
