@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login } from './Login.jsx';
+import { AuthenticationPage } from './AuthenticationPage.jsx';
 import { ErrorPage } from './ErrorPage.jsx';
 
 import { ThemeContext, UserContext } from './Context.jsx';
@@ -17,7 +17,13 @@ function App () {
           <Route 
             path="/login"
             element={
-                <Login/>
+                <AuthenticationPage newUser={false}/>
+            }
+          />
+          <Route 
+            path="/signup"
+            element={
+                <AuthenticationPage newUser={true} />
             }
           />
           <Route 

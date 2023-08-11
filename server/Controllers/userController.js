@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
-const User = require('../Models/userModel');
+const UserModel = require('../Models/userModel');
 const bcrypt = require("bcrypt");
 
 const userController = {
+  //find a user in the db
   getUser: async (req, res, next) => {
     try {
       const { username, password } = req.body;
-      const user = await User.findOne({ username });
+      const user = await UserModel.findOne({ username });
 
       if (!user) {
         const err = {
@@ -28,7 +29,7 @@ const userController = {
         return next(err);
       }
 
-      res.locals.user = user;
+      res.locals.id = user._id;
       return next();
     } catch (error) {
       const err = {
@@ -38,10 +39,59 @@ const userController = {
       }
       return next(err);
     }
-  }
+  },
+  //create a user in the db
+  createUser: async (req, res, next) => {
+    try {
+      const { username, password } = req.body;
+      const existingUsername = await UserModel.findOne({ username });
 
-  //createUser
-  //deleteUser
+      if (existingUsername) {
+        const err = {
+          log: 'Express error in userController.createUser middleware: validate username',
+          status: 401,
+          message: { err: 'Username already exists' }
+        }
+        return next(err);
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      const { _id } = await UserModel.create({ 
+        username, 
+        password: hashedPassword 
+      });
+
+      res.locals.id = _id;
+      return next();
+    } catch (error) {
+      const err = {
+        log: 'Express error in userController.createUser middleware',
+        status: 500,
+        message: { err: error.message }
+      }
+      return next(err);
+    }
+  },
+  //delete a user from the db
+  deleteUser: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      const { _id } = await UserModel.findOneAndDelete({ _id: new mongoose.Types.ObjectId(id) });
+      
+      res.locals.id = _id;
+      return next();
+    } catch (error) {
+        const err = {
+          log: 'Express error in userController.deleteUser middleware',
+          status: 500,
+          message: { err: error.message }
+        }
+        return next(err);
+    }
+  },
+  //updateUser - for example, update username
 }
 
 module.exports = userController;

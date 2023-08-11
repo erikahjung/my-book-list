@@ -20,7 +20,7 @@ module.exports = {
     compress: true,
     historyApiFallback: true,
     proxy: {
-      '/mybooklist': 'http://localhost:3000/'
+      '/api': 'http://localhost:3000/'
     }
   },
   mode: process.env.NODE_ENV,

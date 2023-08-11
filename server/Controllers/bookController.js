@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const Book = require('../Models/bookModel');
+const BookModel = require('../Models/bookModel');
 
 const bookController = {
   //get books by status in the db
   getBooks: (req, res, next) => {
     const { status } = req.params;
-    Book.find({ status })
+    BookModel.find({ status })
       .then((bookArr) => {
         // console.log('bookController.getBooks: ', bookArr);
         // if (bookArr.length === 0) {
@@ -28,7 +28,7 @@ const bookController = {
   addBook: (req, res, next) => {
     const { title, author, status } = req.body;
     console.log('bookController.addBook req.body: ', req.body);
-    Book.create({ title, author, status })
+    BookModel.create({ title, author, status })
       .then((newBook) => {
         console.log('bookController.addBook sucessful: ', newBook);
         res.locals.newBook = newBook;
@@ -48,7 +48,7 @@ const bookController = {
     const { title, author, status } = req.body;
     console.log('bookController.updateBook req.params: ', req.params);
     console.log('bookController.updateBook req.body: ', req.body);
-    Book.findOneAndUpdate({ _id : new mongoose.Types.ObjectId(id) }, { title, author, status }, { new: true })
+    BookModel.findOneAndUpdate({ _id : new mongoose.Types.ObjectId(id) }, { title, author, status }, { new: true })
       .then((updatedBook) => {
         console.log('bookController.updateBook sucessful: ', updatedBook);
         res.locals.updatedBook = updatedBook;
@@ -66,7 +66,7 @@ const bookController = {
   deleteBook: (req, res, next) => {
     const { id } = req.params;
     console.log('bookController.deleteBook req.params: ', req.params);
-    Book.findOneAndDelete({ _id: new mongoose.Types.ObjectId(id) })
+    BookModel.findOneAndDelete({ _id: new mongoose.Types.ObjectId(id) })
       .then((deletedBook) => {
         console.log('bookController.deleteBook sucessful: ', deletedBook);
         res.locals.deletedBook = deletedBook;

@@ -80,7 +80,7 @@ function BookList () {
         })
       };
       // console.log(reqOptions);
-      fetch('/mybooklist', reqOptions)
+      fetch('/api/book', reqOptions)
         .then((res) => res.json())
         .then((newBook) => {
           console.log(newBook)
@@ -100,7 +100,7 @@ function BookList () {
         })
       };
       // console.log(reqOptions);
-      fetch(`/mybooklist/${form.id}`, reqOptions)
+      fetch(`/api/book/${form.id}`, reqOptions)
         .then((res) => res.json())
         .then((updatedBook) => {
           console.log(updatedBook)
@@ -112,7 +112,7 @@ function BookList () {
 
   const handleDelete = () => {
     if (checkbox.id) {
-      fetch(`/mybooklist/${checkbox.id}`, { method: 'DELETE' })
+      fetch(`/api/book/${checkbox.id}`, { method: 'DELETE' })
           .then((res) => res.json())
           .then((deletedBook) => {
             console.log(deletedBook)
@@ -125,9 +125,9 @@ function BookList () {
 
   useEffect(() => {
     Promise.all([
-      fetch('/mybooklist/to-do'),
-      fetch('/mybooklist/in-progress'),
-      fetch('/mybooklist/done'),
+      fetch('/api/book/to-do'),
+      fetch('/api/book/in-progress'),
+      fetch('/api/book/done'),
     ])
       .then(([todoRes, inprogRes, doneRes]) => 
         Promise.all([todoRes.json(), inprogRes.json(), doneRes.json()])
