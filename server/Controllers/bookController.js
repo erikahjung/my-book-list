@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Book = require('./bookModel');
+const Book = require('../Models/bookModel');
 
 const bookController = {
   //get books by status in the db

@@ -4,7 +4,7 @@ const app = express();
 const PORT = 3000;
 require('dotenv').config();
 
-const bookController = require('./bookController');
+const bookController = require('./Controllers/bookController');
 
 //connect to the mongoDB
 const mongoose = require('mongoose');
