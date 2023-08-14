@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Button from './Button.jsx';
-import { ThemeContext } from './ThemeContext.jsx';
+import { ThemeContext } from './Context.jsx';
 
 function Form (props) {
   const { theme } = useContext(ThemeContext);

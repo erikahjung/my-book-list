@@ -1,10 +1,12 @@
 const path = require('path');
 const express = require('express');
+const cookieSession = require('cookie-session');
 const app = express();
 const PORT = 3000;
 require('dotenv').config();
 
-const bookController = require('./bookController');
+const BookRouter = require('./Routers/bookRouter');
+const UserRouter = require('./Routers/userRouter');
 
 //connect to the mongoDB
 const mongoose = require('mongoose');
@@ -19,6 +21,11 @@ mongoose.connect(MONGO_URI, {
 //parse the application/json & the application/x-www-form-urlencoded incoming Request Object
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2', 'key3'],
+  // maxAge: 60000 //1 minute
+}));
 
 //serve the client the html file and webpack bundle.js file
 // if (process.env.NODE_ENV === 'production') {
@@ -28,37 +35,10 @@ app.get('/', (req, res) => {
 })
 // }
 
-const bookRouter = express.Router();
-app.use('/mybooklist', bookRouter);
-
-//GET request to get books with a given status from the db
-bookRouter.get('/:status', bookController.getBooks, (req, res) => {
-  return res.status(200).json(res.locals.books);
-  // return res.json(res.locals.books);
-})
-
-//GET request to get all books from the db
-bookRouter.get('/', bookController.getBooks, (req, res) => {
-  return res.json(res.locals.books);
-})
-
-//POST request to add a book to the db
-bookRouter.post('/', bookController.addBook, (req, res) => {
-  // return res.sendStatus(200);
-  return res.status(200).json(res.locals.newBook);
-})
-
-//PATCH request to update a book in the db
-bookRouter.patch('/:id', bookController.updateBook, (req, res) => {
-  // return res.sendStatus(200);
-  return res.status(200).json(res.locals.updatedBook);
-})
-
-//DELETE request to delete a book in the db
-bookRouter.delete('/:id', bookController.deleteBook, (req, res) => {
-  // return res.sendStatus(200);
-  return res.status(200).json(res.locals.deletedBook);
-})
+//router for books
+app.use('/api/book', BookRouter);
+//router for users
+app.use('/api/user', UserRouter);
 
 //unknown route handler
 app.use((req, res) => {

@@ -20,12 +20,15 @@
   },
   "homepage": "https://github.com/erikahjung/my-budget#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cookie-session": "^2.0.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongoose": "^7.0.0",
-    "nodemon": "^2.0.20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.45.4",
+    "react-router-dom": "^6.15.0",
     "webpack": "^5.75.0"
   },
   "devDependencies": {
@@ -36,7 +39,9 @@
     "css-loader": "^6.7.3",
     "eslint": "^8.35.0",
     "html-webpack-plugin": "^5.5.0",
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.0.1",
+    "sass": "^1.65.1",
+    "sass-loader": "^13.3.2",
     "style-loader": "^3.3.1",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"

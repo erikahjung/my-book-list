@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.js',
+  entry: './client/index.jsx',
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'build'),
@@ -20,7 +20,7 @@ module.exports = {
     compress: true,
     historyApiFallback: true,
     proxy: {
-      '/mybooklist': 'http://localhost:3000/'
+      '/api': 'http://localhost:3000/'
     }
   },
   mode: process.env.NODE_ENV,
@@ -40,10 +40,11 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/i,
+        test: /\.s[ac]ss$/i,
         use: [
           "style-loader",
-          "css-loader"
+          "css-loader",
+          "sass-loader"
         ],
       },
     ]
