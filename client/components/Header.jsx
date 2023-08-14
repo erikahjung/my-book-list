@@ -7,9 +7,22 @@ function Header () {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const logout = () => {
-    setUser(null);
-    navigate('/login');
+  const logout = async () => {
+    try {
+      const response = await fetch('/api/user/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log(response);
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+
+      setUser(null);
+      navigate('/login');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // console.log(user);

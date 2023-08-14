@@ -24,7 +24,7 @@ export const AuthenticationPage = ({ newUser }) => {
     }
   });
 
-  const onSubmit = async ({ username, password }, e) => {
+  const onSubmit = async ({ username, password }) => {
     try {
       const response = await fetch(URL, {
         method: 'POST',

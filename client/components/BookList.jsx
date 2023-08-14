@@ -146,6 +146,7 @@ function BookList () {
   useEffect(() => {
     if (!user) {
       navigate('/login');
+      //check if there's an active session
     }
   }, [])
 

@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cookieSession = require('cookie-session');
 const app = express();
 const PORT = 3000;
 require('dotenv').config();
@@ -20,6 +21,11 @@ mongoose.connect(MONGO_URI, {
 //parse the application/json & the application/x-www-form-urlencoded incoming Request Object
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2', 'key3'],
+  // maxAge: 60000 //1 minute
+}));
 
 //serve the client the html file and webpack bundle.js file
 // if (process.env.NODE_ENV === 'production') {
